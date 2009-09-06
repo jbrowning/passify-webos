@@ -1,6 +1,6 @@
 {
 	"id": "com.jkbrowning.passify",
-	"version": "0.6.0",
+	"version": "1.0.0",
 	"vendor": "Jeff Browning",
 	"type": "web",
 	"main": "index.html",
