@@ -1,0 +1,22 @@
+/* Put Application specific CSS here. */
+
+.passText {
+	color: red;
+	font-weight: bold;
+	text-align: center;
+}
+
+.palm-page-header .subtitle {
+	margin-top: -15px;
+	padding: 0 15px 15px 15px;
+}
+
+.bottom-scroll-fade {
+	position: fixed; 
+	bottom: 0; 
+	z-index: 100000;
+	height: 40px; 
+	width: 100%;
+	background: url(../images/bottom-gradient.png) bottom center repeat-x;
+	-webkit-palm-mouse-target: ignore;
+}
