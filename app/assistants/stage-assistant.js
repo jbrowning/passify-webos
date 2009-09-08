@@ -1,10 +1,11 @@
 // Global Namespace
 
-Passify = { passOpts: {},
+var Passify = { passOpts: {},
 			prefs: {}
 };
 
 function StageAssistant() {
+	Passify.versionString = "1.0.0";
 	Passify.gen = new PassGen();
 	Passify.passOpts.passLength = 8;
 	Passify.passOpts.numbers = true;
@@ -16,6 +17,16 @@ function StageAssistant() {
 	
 	Passify.currentPass = "";
 	Passify.passHistory = [];
+	
+	// Set up app menu
+	Passify.MenuAttrs = {omitDefaultItems: true};
+	Passify.MenuModel = {
+		visible: true,
+		items: [
+			{label:"About Passify...", command:"do-about"},
+			{label:"Preferences...", command: "do-prefs"}
+		]
+	};
 	
 	Passify.passOptsCookie = new Mojo.Model.Cookie("passOpts");
 	Passify.prefsCookie = new Mojo.Model.Cookie("prefs");
@@ -41,5 +52,31 @@ function StageAssistant() {
 }
 
 StageAssistant.prototype.setup = function() {
-	this.controller.pushScene({	name: "main"});
+	this.controller.pushScene("main");
+}
+
+// Handle app menu commands
+StageAssistant.prototype.handleCommand = function(event) {
+	if (event.type == Mojo.Event.command) {
+		switch(event.command) {
+			case "do-prefs":
+				this.controller.pushScene("prefs");
+				break;
+			case "do-about":
+				var currentScene = this.controller.activeScene();
+				currentScene.showAlertDialog({
+					onChoose: function(value) {},
+					title: "Passify v#{version}".interpolate({
+						version: Passify.versionString
+					}),
+					message: "Open source and covered by a a BSD-like license.<br />#{link}".interpolate({
+						link: '<a href="http://wiki.github.com/jbrowning/Passify/license-info">Tap here</a> for more information.'
+					}),
+					choices: [
+						{label:"OK", value:""}
+					]
+				});
+				break;
+		}
+	}
 }

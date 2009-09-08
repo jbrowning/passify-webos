@@ -10,7 +10,7 @@
         "scenes": "history"
     },
     {
-        "source": "app\/assistants\/Prefs-assistant.js",
-        "scenes": "Prefs"
+        "source": "app\/assistants\/prefs-assistant.js",
+        "scenes": "prefs"
     }
 ]

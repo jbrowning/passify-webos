@@ -7,6 +7,11 @@ function HistoryAssistant() {
 
 HistoryAssistant.prototype.setup = function() {
 
+	// Setup Widgets
+	
+	// App menu
+	this.controller.setupWidget(Mojo.Menu.appMenu, Passify.MenuAttrs, Passify.MenuModel);
+	
 	this.clearButtonAttributes = {};
 	this.clearButtonModel = {
 		label: "Clear History",

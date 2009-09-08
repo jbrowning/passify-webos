@@ -8,6 +8,9 @@ function MainAssistant() {
 MainAssistant.prototype.setup = function() {
 	// Setup widgets
 	
+	// App menu
+	this.controller.setupWidget(Mojo.Menu.appMenu, Passify.MenuAttrs, Passify.MenuModel);
+	
 	// Text Field
 	this.passLengthIPAttrs = {
 		label: "Password Length",
