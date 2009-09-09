@@ -6,10 +6,6 @@ function PrefsAssistant() {
 }
 
 PrefsAssistant.prototype.setup = function() {
-	/*
-	<div x-mojo-element="ToggleButton" id="keepHistoryTB"></div>
-	<div x-mojo-element="IntegerPicker" id="historySizeIP"></div>
-	*/
 	// Setup Widgets
 	
 	// keepHistoryTB
@@ -21,21 +17,46 @@ PrefsAssistant.prototype.setup = function() {
 	};
 	this.controller.setupWidget("keepHistoryTB", this.keepHistoryTBAttrs, this.keepHistoryTBModel);
 	
-	// historySizeIP
-	this.historySizeIPAttrs = {
-		label: "Passwords in history",
-		min: 1,
-		max: 20,
+	Mojo.Log.warn("Passify.prefs.keepHistory value is", Passify.prefs.keepHistory);
+	
+	// historySizeLS
+	this.historySizeLSAttrs = {
+		label: "Passwords in History",
+		labelPlacement: Mojo.Widget.labelPlacementLeft,
+		multiline: true
 	};
-	this.historySizeIPModel = {
+	this.historySizeLSModel = {
 		value: Passify.prefs.passHistorySize,
-		disabled: Passify.prefs.keepHistory
+		disabled: !Passify.prefs.keepHistory,
+		choices: [
+			{label: "1", value: 1},
+			{label: "2", value: 2},
+			{label: "3", value: 3},
+			{label: "4", value: 4},
+			{label: "5", value: 5},
+			{label: "6", value: 6},
+			{label: "7", value: 7},
+			{label: "8", value: 8},
+			{label: "9", value: 9},
+			{label: "10", value: 10},
+			{label: "11", value: 11},
+			{label: "12", value: 12},
+			{label: "13", value: 13},
+			{label: "14", value: 14},
+			{label: "15", value: 15},
+			{label: "16", value: 16},
+			{label: "17", value: 17},
+			{label: "18", value: 18},
+			{label: "19", value: 19},
+			{label: "20", value: 20}
+		]
 	};
-	this.controller.setupWidget("historySizeIP", this.historySizeIPAttrs, this.historySizeIPModel);
+	this.controller.setupWidget("historySizeLS", this.historySizeLSAttrs, this.historySizeLSModel);
 	
 	// Setup listeners
 	Mojo.Event.listen(this.controller.get("keepHistoryTB"), Mojo.Event.propertyChange, this.keepHistoryChangeHandler.bind(this));
-	Mojo.Event.listen(this.controller.get("historySizeIP"), Mojo.Event.propertyChange, this.historySizeChangeHandler.bind(this));
+	Mojo.Event.listen(this.controller.get("historySizeLS"), Mojo.Event.propertyChange, this.historySizeChangeHandler.bind(this));
+	
 }
 
 PrefsAssistant.prototype.activate = function(event) {
@@ -52,21 +73,19 @@ PrefsAssistant.prototype.deactivate = function(event) {
 PrefsAssistant.prototype.cleanup = function(event) {
 	//Mojo.Event.stopListening(this.controller.get("copyButton"), Mojo.Event.tap, this.copyButtonTapHandler.bind(this));
 	Mojo.Event.stopListening(this.controller.get("keepHistoryTB"), Mojo.Event.propertyChange, this.keepHistoryChangeHandler.bind(this));
-	Mojo.Event.stopListening(this.controller.get("historySizeIP"), Mojo.Event.propertyChange, this.historySizeChangeHandler.bind(this));
+	Mojo.Event.stopListening(this.controller.get("historySizeLS"), Mojo.Event.propertyChange, this.historySizeChangeHandler.bind(this));
 }
 
 PrefsAssistant.prototype.keepHistoryChangeHandler = function(event) {
 	if (event.value === false) {
-		Passify.passHistory.clear();
-		this.controller.get("historySizeRow").visible = false;
-		//this.historySizeModel.disabled = true;
-		//this.controller.modelChanged(this.historySizeModel, this);
+		this.historySizeLSModel.disabled = true;
+		this.controller.modelChanged(this.historySizeLSModel, this);	
 	} else {
-		this.controller.get("historySizeRow").visible = true;
-		//this.historySizeModel.disabled = false;
-		//this.controller.modelChanged(this.historySizeModel, this);
+		this.historySizeLSModel.disabled = false;
+		this.controller.modelChanged(this.historySizeLSModel, this);
 	}
 	Passify.prefs.keepHistory = event.value;
+	//this.controller.get("historySizeDrawer").mojo.setOpenState(event.value);
 }
 
 PrefsAssistant.prototype.historySizeChangeHandler = function(event) {

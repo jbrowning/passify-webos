@@ -82,8 +82,9 @@ MainAssistant.prototype.setup = function() {
 }
 
 MainAssistant.prototype.activate = function(event) {
+	// If there are no saved passwords or saving passwords is disabled, disable the history button
 	if (Passify.passHistory.length === 0) {
-		Mojo.Log.warn("There are no more history strings. Disabling history button");
+		Mojo.Log.info("There are no more history strings. Disabling history button");
 		this.historyButtonModel.disabled = true;
 		this.controller.modelChanged(this.historyButtonModel, this);
 	}
@@ -156,7 +157,9 @@ MainAssistant.prototype.historyButtonTapHandler = function(event) {
 MainAssistant.prototype.genPass = function() {
 	var newPass = Passify.gen.generate(Passify.passOpts);
 	Passify.currentPass = { pass: newPass, escapedPass: newPass.escapeHTML() };
-	Passify.passHistory.unshift(Passify.currentPass);
+	if (Passify.prefs.keepHistory) {
+		Passify.passHistory.unshift(Passify.currentPass);
+	}
 	//Passify.passHistory.unshift({pass: newPass, escapedPass: newPass.escapeHTML()});
 	
 	this.controller.get("passField").update(Passify.currentPass.escapedPass);
@@ -166,7 +169,10 @@ MainAssistant.prototype.genPass = function() {
 		Passify.passHistory = Passify.passHistory.slice(0, Passify.prefs.passHistorySize);
 	}
 	
-	if (this.historyButtonModel.disabled === true) {
+	
+	//if (this.historyButtonModel.disabled === true) {
+	// This one should work better. The password history is cleared when history keeping is disabled
+	if (Passify.passHistory.length > 0) {
 		this.historyButtonModel.disabled = false;
 		this.controller.modelChanged(this.historyButtonModel, this);
 	}
