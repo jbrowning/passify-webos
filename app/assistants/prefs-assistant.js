@@ -22,7 +22,7 @@ PrefsAssistant.prototype.setup = function() {
 	// historySizeLS
 	this.historySizeLSAttrs = {
 		label: "Passwords in History",
-		labelPlacement: Mojo.Widget.labelPlacementLeft,
+		//labelPlacement: Mojo.Widget.labelPlacementLeft,
 		multiline: true
 	};
 	this.historySizeLSModel = {
