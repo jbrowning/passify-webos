@@ -92,7 +92,7 @@ MainAssistant.prototype.activate = function(event) {
 
 
 MainAssistant.prototype.deactivate = function(event) {
-	/* DEBUG ONLY */
+
 }
 
 MainAssistant.prototype.cleanup = function(event) {
@@ -107,7 +107,7 @@ MainAssistant.prototype.cleanup = function(event) {
 	Passify.historyCookie.put(Passify.passHistory);
 	Passify.prefsCookie.put(Passify.prefs);
 	
-	/* Kill them */
+	/* The emulator has a bug in it that makes it retain cookies after an app delete. Use these to kill the cookies */
 	
 	/*
 	Passify.passOptsCookie.put(undefined);

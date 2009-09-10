@@ -40,6 +40,11 @@ HistoryAssistant.prototype.activate = function(event) {
 	if (Passify.passHistory.length === 0) {
 		this.controller.stageController.popScene();
 	}
+	
+	if (this.historyListModel.items.length !== Passify.passHistory.length) {
+		this.historyListModel.items = Passify.passHistory;
+		this.controller.modelChanged(this.historyListModel, this);
+	}
 }
 
 

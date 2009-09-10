@@ -22,7 +22,7 @@ PrefsAssistant.prototype.setup = function() {
 	// historySizeLS
 	this.historySizeLSAttrs = {
 		label: "Passwords in History",
-		//labelPlacement: Mojo.Widget.labelPlacementLeft,
+		// labelPlacement: Mojo.Widget.labelPlacementLeft,
 		multiline: true
 	};
 	this.historySizeLSModel = {
@@ -71,13 +71,13 @@ PrefsAssistant.prototype.deactivate = function(event) {
 }
 
 PrefsAssistant.prototype.cleanup = function(event) {
-	//Mojo.Event.stopListening(this.controller.get("copyButton"), Mojo.Event.tap, this.copyButtonTapHandler.bind(this));
 	Mojo.Event.stopListening(this.controller.get("keepHistoryTB"), Mojo.Event.propertyChange, this.keepHistoryChangeHandler.bind(this));
 	Mojo.Event.stopListening(this.controller.get("historySizeLS"), Mojo.Event.propertyChange, this.historySizeChangeHandler.bind(this));
 }
 
 PrefsAssistant.prototype.keepHistoryChangeHandler = function(event) {
 	if (event.value === false) {
+		Passify.passHistory.clear();
 		this.historySizeLSModel.disabled = true;
 		this.controller.modelChanged(this.historySizeLSModel, this);	
 	} else {
@@ -85,7 +85,6 @@ PrefsAssistant.prototype.keepHistoryChangeHandler = function(event) {
 		this.controller.modelChanged(this.historySizeLSModel, this);
 	}
 	Passify.prefs.keepHistory = event.value;
-	//this.controller.get("historySizeDrawer").mojo.setOpenState(event.value);
 }
 
 PrefsAssistant.prototype.historySizeChangeHandler = function(event) {
