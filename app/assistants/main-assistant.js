@@ -169,7 +169,7 @@ MainAssistant.prototype.genPass = function() {
 	
 	//if (this.historyButtonModel.disabled === true) {
 	// This one should work better. The password history is cleared when history keeping is disabled
-	if (Passify.passHistory.length > 0) {
+	if (Passify.passHistory.length > 1) {
 		this.historyButtonModel.disabled = false;
 		this.controller.modelChanged(this.historyButtonModel, this);
 	}
