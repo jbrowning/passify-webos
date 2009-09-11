@@ -11,13 +11,11 @@ PrefsAssistant.prototype.setup = function() {
 	// keepHistoryTB
 	this.keepHistoryTBAttrs = {};
 	this.keepHistoryTBModel = {
-		value: Passify.prefs.keepHistory,
-		trueLabel: "Yes",
-		falseLabel: "No"
+		value: Passify.prefs.keepHistory
+		//trueLabel: "Yes",
+		//falseLabel: "No"
 	};
 	this.controller.setupWidget("keepHistoryTB", this.keepHistoryTBAttrs, this.keepHistoryTBModel);
-	
-	Mojo.Log.warn("Passify.prefs.keepHistory value is", Passify.prefs.keepHistory);
 	
 	// historySizeLS
 	this.historySizeLSAttrs = {
@@ -65,8 +63,12 @@ PrefsAssistant.prototype.activate = function(event) {
 }
 
 PrefsAssistant.prototype.deactivate = function(event) {
+	if (!Passify.prefs.keepHistory) {
+		Passify.passHistory.clear();
+	}
+	
 	if (Passify.prefs.passHistorySize < Passify.passHistory.length) {
-		Passify.passHistory = Passify.passHistory.slice(0, Passify.prefs.passHistorySize);
+		Passify.passHistory = Passify.passHistory.slice(0, Passify.prefs.passHistorySize + 1);
 	}
 }
 
@@ -76,8 +78,8 @@ PrefsAssistant.prototype.cleanup = function(event) {
 }
 
 PrefsAssistant.prototype.keepHistoryChangeHandler = function(event) {
+	// Do not clear the password history here in case the user changes their mind
 	if (event.value === false) {
-		Passify.passHistory.clear();
 		this.historySizeLSModel.disabled = true;
 		this.controller.modelChanged(this.historySizeLSModel, this);	
 	} else {
@@ -88,5 +90,6 @@ PrefsAssistant.prototype.keepHistoryChangeHandler = function(event) {
 }
 
 PrefsAssistant.prototype.historySizeChangeHandler = function(event) {
-	Passify.prefs.passHistorySize = event.value;
+	Mojo.Log.info("History size changed: event.value: ", event.value, "event.label: ", event.label);
+	Passify.prefs.passHistorySize = parseInt(event.value);
 }

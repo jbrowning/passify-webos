@@ -122,7 +122,6 @@ MainAssistant.prototype.cleanup = function(event) {
 
 
 MainAssistant.prototype.passLengthChangeHandler = function(event) {
-	Mojo.Log.warn("passLengthSlider value changed. New value: " + event.value);
 	Passify.passOpts.passLength = event.value;
 	this.genPass();
 }
@@ -157,18 +156,16 @@ MainAssistant.prototype.historyButtonTapHandler = function(event) {
 MainAssistant.prototype.genPass = function() {
 	var newPass = Passify.gen.generate(Passify.passOpts);
 	Passify.currentPass = { pass: newPass, escapedPass: newPass.escapeHTML() };
+	this.controller.get("passField").update(Passify.currentPass.escapedPass);
+	
 	if (Passify.prefs.keepHistory) {
 		Passify.passHistory.unshift(Passify.currentPass);
 	}
-	//Passify.passHistory.unshift({pass: newPass, escapedPass: newPass.escapeHTML()});
 	
-	this.controller.get("passField").update(Passify.currentPass.escapedPass);
-	
-	if (Passify.passHistory.length > Passify.prefs.passHistorySize) {
-		Mojo.Log.warn("passHistory too big, removing excess");
-		Passify.passHistory = Passify.passHistory.slice(0, Passify.prefs.passHistorySize);
+	if (Passify.passHistory.length > Passify.prefs.passHistorySize + 1) {
+		Mojo.Log.info("passHistory too big, removing excess");
+		Passify.passHistory = Passify.passHistory.slice(0, Passify.prefs.passHistorySize + 1);
 	}
-	
 	
 	//if (this.historyButtonModel.disabled === true) {
 	// This one should work better. The password history is cleared when history keeping is disabled

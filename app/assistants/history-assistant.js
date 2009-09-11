@@ -27,13 +27,13 @@ HistoryAssistant.prototype.setup = function() {
 		
 	}
 	this.historyListModel = {
-		items: Passify.passHistory
+		items: Passify.passHistory.slice(1)
 	}
 	this.controller.setupWidget("historyList", this.historyListAttributes, this.historyListModel);
         
         // Set up listeners
-        Mojo.Event.listen(this.controller.get(clearButton), Mojo.Event.tap, this.clearButtonTapHandler.bind(this));
-        Mojo.Event.listen(this.controller.get(historyList), Mojo.Event.listTap, this.historyListTapHandler.bind(this));
+        Mojo.Event.listen(this.controller.get("clearButton"), Mojo.Event.tap, this.clearButtonTapHandler.bind(this));
+        Mojo.Event.listen(this.controller.get("historyList"), Mojo.Event.listTap, this.historyListTapHandler.bind(this));
 }
 
 HistoryAssistant.prototype.activate = function(event) {
@@ -41,8 +41,9 @@ HistoryAssistant.prototype.activate = function(event) {
 		this.controller.stageController.popScene();
 	}
 	
+	// We should not display the entire password history. This would include the current password in the history list
 	if (this.historyListModel.items.length !== Passify.passHistory.length) {
-		this.historyListModel.items = Passify.passHistory;
+		this.historyListModel.items = Passify.passHistory.slice(1);
 		this.controller.modelChanged(this.historyListModel, this);
 	}
 }
@@ -55,12 +56,12 @@ HistoryAssistant.prototype.deactivate = function(event) {
 
 HistoryAssistant.prototype.cleanup = function(event) {
 	Mojo.Event.stopListening(this.controller.get(clearButton), Mojo.Event.tap, this.clearButtonTapHandler.bind(this));
-        Mojo.Event.stopListening(this.controller.get(historyList), Mojo.Event.listTap, this.historyListTapHandler.bind(this));
+    Mojo.Event.stopListening(this.controller.get(historyList), Mojo.Event.listTap, this.historyListTapHandler.bind(this));
 }
 
 HistoryAssistant.prototype.clearButtonTapHandler = function(event) {
 	
-	Mojo.Log.warn("alertChoice value 1 is", this.alertChoice);
+	Mojo.Log.info("alertChoice value 1 is", this.alertChoice);
 	
 	this.controller.showAlertDialog({
 		onChoose: function(value)
@@ -71,7 +72,6 @@ HistoryAssistant.prototype.clearButtonTapHandler = function(event) {
 						}
 						
 						this.alertChoice = value;
-						Mojo.Log.warn("alertChoice value 2 is", this.alertChoice);
 					},
 		title: "Confirm clear history",
 		message: "Are you sure you want to clear your password history?",
