@@ -6,6 +6,7 @@ var Passify = { passOpts: {},
 
 function StageAssistant() {
 	Passify.versionString = "1.0.0";
+	Passify.licenseURL = "http://wiki.github.com/jbrowning/Passify/license-info";
 	Passify.gen = new PassGen();
 	Passify.passOpts.passLength = 8;
 	Passify.passOpts.numbers = true;
@@ -65,15 +66,26 @@ StageAssistant.prototype.handleCommand = function(event) {
 			case "do-about":
 				var currentScene = this.controller.activeScene();
 				currentScene.showAlertDialog({
-					onChoose: function(value) {},
+					onChoose: function(value) {
+						if (value == "license") {
+							this.controller.serviceRequest("palm://com.palm.applicationManager", {
+							  method: "open",
+							  parameters:  {
+							      id: 'com.palm.app.browser',
+							      params: {
+							          target: Passify.licenseURL
+							      }
+							  }
+							});
+						}
+					},
 					title: "Passify v#{version}".interpolate({
 						version: Passify.versionString
 					}),
-					message: "Open source and covered by a a BSD-like license.<br />#{link}".interpolate({
-						link: '<a href="http://wiki.github.com/jbrowning/Passify/license-info">Tap here</a> for more information.'
-					}),
+					message: "Open source and covered by a a BSD-like license.<br />#{link}",
 					choices: [
-						{label:"OK", value:""}
+						{label: "License Information", value: "license"},
+						{label:"OK", value:"ok"}
 					]
 				});
 				break;
