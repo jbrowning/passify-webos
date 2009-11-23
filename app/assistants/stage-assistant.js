@@ -82,7 +82,7 @@ StageAssistant.prototype.handleCommand = function(event) {
 					title: "Passify v#{version}".interpolate({
 						version: Passify.versionString
 					}),
-					message: "Copyright &copy 2009, Jeff Browning. This application is open-source and is covered by a a BSD-like license.",
+					message: "Copyright &copy 2009, Jeff Browning. This application is open-source and is covered by a BSD-like license.",
 					choices: [
 						{label: "License Information", value: "license"},
 						{label:"OK", value:"ok"}
