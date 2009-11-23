@@ -11,9 +11,9 @@ MainAssistant.prototype.setup = function() {
 	// App menu
 	this.controller.setupWidget(Mojo.Menu.appMenu, Passify.MenuAttrs, Passify.MenuModel);
 	
-	// Text Field
+	// Pass Length IP
 	this.passLengthIPAttrs = {
-		label: "Password Length",
+		label: " ",
 		min: 4,
 		max: 20
 	};

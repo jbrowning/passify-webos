@@ -11,12 +11,43 @@
 	padding: 0 15px 15px 15px;
 }
 
-.bottom-scroll-fade {
+.scroll-fade-bottom {
 	position: fixed; 
 	bottom: 0; 
 	z-index: 100000;
-	height: 40px; 
+	height: 34px; 
 	width: 100%;
-	background: url(../images/bottom-gradient.png) bottom center repeat-x;
+	background: url(../images/scroll-fade-bottom.png) bottom center repeat-x;
 	-webkit-palm-mouse-target: ignore;
+}
+
+.palm-drawer-container {
+  border-width: 20px 1px 20px 1px;
+  /*-webkit-border-image: none;*/
+  overflow: visible;
+}
+
+.drawer-bottom {
+	min-height: 10px;
+}
+
+.drawer-row {
+	padding-top: 0px; 
+	padding-bottom: 5px;
+	background-image:none;
+	min-height:60px;
+}
+
+.list-ip {
+	float: right; 
+	margin-right:2px;
+}
+
+.list-ip-title {
+	float: left;
+	padding: 13px 14px 15px 14px;
+}
+
+.drawer-row .list-ip-title {
+	padding: 15px 14px 15px 14px;
 }

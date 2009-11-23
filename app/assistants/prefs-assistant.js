@@ -7,7 +7,7 @@ function PrefsAssistant() {
 
 PrefsAssistant.prototype.setup = function() {
 	// Setup Widgets
-	
+		
 	// keepHistoryTB
 	this.keepHistoryTBAttrs = {};
 	this.keepHistoryTBModel = {
@@ -23,6 +23,7 @@ PrefsAssistant.prototype.setup = function() {
 		// labelPlacement: Mojo.Widget.labelPlacementLeft,
 		multiline: true
 	};
+	/*
 	this.historySizeLSModel = {
 		value: Passify.prefs.passHistorySize,
 		disabled: !Passify.prefs.keepHistory,
@@ -50,10 +51,33 @@ PrefsAssistant.prototype.setup = function() {
 		]
 	};
 	this.controller.setupWidget("historySizeLS", this.historySizeLSAttrs, this.historySizeLSModel);
+	*/
+	
+	// Pass Length IP
+	this.historySizeIPAttrs = {
+		label: " ",
+		min: 1,
+		max: 20,
+		disabled: true
+	};
+	this.historySizeIPModel = {
+		value: Passify.prefs.passHistorySize
+	};
+	this.controller.setupWidget("historySizeIP",	this.historySizeIPAttrs,	this.historySizeIPModel);
+	
+	// Hist Prefs Drawer
+	this.histPrefsDrawerAttrs = {
+		
+	};
+	this.histPrefsDrawerModel = {
+		open: Passify.prefs.keepHistory
+	};
+	this.controller.setupWidget("histPrefsDrawer",	this.histPrefsDrawerAttrs,	this.histPrefsDrawerModel);
+	this.drawer = this.controller.get("histPrefsDrawer");
 	
 	// Setup listeners
 	Mojo.Event.listen(this.controller.get("keepHistoryTB"), Mojo.Event.propertyChange, this.keepHistoryChangeHandler.bind(this));
-	Mojo.Event.listen(this.controller.get("historySizeLS"), Mojo.Event.propertyChange, this.historySizeChangeHandler.bind(this));
+	Mojo.Event.listen(this.controller.get("historySizeIP"), Mojo.Event.propertyChange, this.historySizeChangeHandler.bind(this));
 	
 }
 
@@ -80,16 +104,22 @@ PrefsAssistant.prototype.cleanup = function(event) {
 PrefsAssistant.prototype.keepHistoryChangeHandler = function(event) {
 	// Do not clear the password history here in case the user changes their mind
 	if (event.value === false) {
-		this.historySizeLSModel.disabled = true;
+		//this.historySizeLSModel.disabled = true;
 		this.controller.modelChanged(this.historySizeLSModel, this);	
 	} else {
-		this.historySizeLSModel.disabled = false;
+		//this.historySizeLSModel.disabled = false;
 		this.controller.modelChanged(this.historySizeLSModel, this);
 	}
+	this.toggleDrawer(event);
 	Passify.prefs.keepHistory = event.value;
 }
 
 PrefsAssistant.prototype.historySizeChangeHandler = function(event) {
 	Mojo.Log.info("History size changed: event.value: ", event.value, "event.label: ", event.label);
 	Passify.prefs.passHistorySize = parseInt(event.value);
+}
+
+PrefsAssistant.prototype.toggleDrawer = function(event) {
+	Mojo.Log.info("Toggling drawer");
+	this.drawer.mojo.setOpenState(!this.drawer.mojo.getOpenState());
 }

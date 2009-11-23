@@ -5,7 +5,7 @@ var Passify = { passOpts: {},
 };
 
 function StageAssistant() {
-	Passify.versionString = "1.0.0";
+	Passify.versionString = "1.1.0";
 	Passify.licenseURL = "http://wiki.github.com/jbrowning/Passify/license-info";
 	Passify.gen = new PassGen();
 	Passify.passOpts.passLength = 8;
@@ -24,7 +24,7 @@ function StageAssistant() {
 	Passify.MenuModel = {
 		visible: true,
 		items: [
-			{label:"About Passify...", command:"do-about"},
+			{label:"About Passify", command:"do-about"},
 			{label:"Preferences...", command: "do-prefs"}
 		]
 	};
