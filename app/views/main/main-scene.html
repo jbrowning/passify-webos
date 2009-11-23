@@ -17,17 +17,14 @@
 		<td width="50%"><div id="genButton" x-mojo-element="Button"></div></td>
 		<td width="50%"><div id="copyButton" x-mojo-element="Button"></div></td>
 	</tr>
-	<!--tr>
-		<td colspan="2"><div id="historyButton" x-mojo-element="Button"></div></td>
-	</tr-->
 </table>
 <div class="palm-group unlabeled">
 	<div class="palm-list">
-		<div class="palm-row first">
-			<div class="palm-row-wrapper">
-				<div class="title">
-					<div id="passLengthIP" x-mojo-element="IntegerPicker"></div>
-				</div>
+		<div style="min-height: 60px" class="palm-row first">
+			<div  class="palm-row-wrapper">
+
+					<div class="list-ip" id="passLengthIP" x-mojo-element="IntegerPicker"></div>
+					<div class="list-ip-title" style="float: left; margin-top:3px;">Password Length</div>
 			</div>
 		</div>
 		<div class="palm-row">
@@ -42,23 +39,7 @@
 				<div class="title">Symbols</div>
 			</div>
 		</div>
-		<!-- Begin Test -->
-		<!--div class="palm-row">
-			<div class="palm-row-wrapper">
-				<div class="title">Test Row</div>
-			</div>
-		</div>
-		<div class="palm-row">
-			<div class="palm-row-wrapper">
-				<div class="title">Test Row</div>
-			</div>
-		</div>
-		<div class="palm-row">
-			<div class="palm-row-wrapper">
-				<div class="title">Test Row</div>
-			</div>
-		</div-->
-		<!-- End Test -->
+
 
 		<div class="palm-row last">
 			<div class="palm-row-wrapper">
@@ -70,4 +51,4 @@
 </div>
 
 <div id="historyButton" x-mojo-element="Button"></div>
-		
+<div class="scroll-fade-bottom" x-mojo-scroll-fade="bottom"></div>

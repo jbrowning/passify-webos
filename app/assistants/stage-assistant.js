@@ -24,7 +24,7 @@ function StageAssistant() {
 	Passify.MenuModel = {
 		visible: true,
 		items: [
-			{label:"About Passify...", command:"do-about"},
+			{label:"About Passify", command:"do-about"},
 			{label:"Preferences...", command: "do-prefs"}
 		]
 	};
