@@ -64,7 +64,7 @@ MainAssistant.prototype.setup = function() {
 	this.historyButtonAttrs = {};
 	this.historyButtonModel = {
 		label: "Password History",
-		disabled: false
+		disabled: !Passify.passHistory.length
 	};
 	this.controller.setupWidget("historyButton", this.historyButtonAttrs, this.historyButtonModel);
 	
